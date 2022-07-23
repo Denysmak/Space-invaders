@@ -9,10 +9,19 @@ screen = pygame.display.set_mode((800, 600))
 #TITLE AND ICON
 #isso muda o título que aparece no pygame
 pygame.display.set_caption("Space Invaders")
-icon = pygame.image.load('spaceship.png')
+icon = pygame.image.load('iconspaceship.png')
 #isso coloca a variável icon como icone do pygame
 pygame.display.set_icon(icon)
 
+#PLAYER
+playerImg = pygame.image.load('spaceship.png')
+#essa parte muda o tamanho do player
+playerImg = pygame.transform.scale(playerImg, (70, 70))
+playerX = 365
+playerY = 480
+
+def player():
+    screen.blit(playerImg, (playerX, playerY))
 #GAME LOOP
 running = True
 #enquanto a variável running for verdade a janela do pygame vai ficar aberta
@@ -23,7 +32,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #isso escolhe a cor do background do pygame
-    screen.fill((255, 0, 0))
+    screen.fill((0, 0, 0))
+    player()
     pygame.display.update()
 
 
