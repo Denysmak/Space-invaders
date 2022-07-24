@@ -52,6 +52,10 @@ while running:
 
 
     playerX += playerX_change
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >= 730:
+        playerX = 730
     player(playerX, playerY)
     pygame.display.update()
 
