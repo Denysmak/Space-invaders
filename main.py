@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # INITIALIZE THE PYGAME
 pygame.init()
@@ -24,8 +25,8 @@ playerX_change = 0
 #ENEMY
 enemyImg = pygame.image.load('alien.png')
 enemyImg = pygame.transform.scale(enemyImg, (50, 50))
-enemyX = 365
-enemyY = 40
+enemyX = random.randint(0, 800)
+enemyY = random.randint(50, 150)
 enemyX_change = 0
 
 
