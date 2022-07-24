@@ -21,9 +21,20 @@ playerX = 365
 playerY = 480
 playerX_change = 0
 
+#ENEMY
+enemyImg = pygame.image.load('alien.png')
+enemyImg = pygame.transform.scale(enemyImg, (50, 50))
+enemyX = 365
+enemyY = 40
+enemyX_change = 0
+
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
+
+def enemy(x, y):
+    screen.blit(enemyImg, (x, y))
+
 #GAME LOOP
 running = True
 #enquanto a variável running for verdade a janela do pygame vai ficar aberta
@@ -57,6 +68,7 @@ while running:
     elif playerX >= 730:
         playerX = 730
     player(playerX, playerY)
+    enemy(enemyX, enemyY)
     pygame.display.update()
 
 
