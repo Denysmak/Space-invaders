@@ -7,6 +7,9 @@ pygame.init()
 #CREATE THE SCREEN
 screen = pygame.display.set_mode((800, 600))
 
+#background
+background = pygame.image.load('background.jpg')
+background = pygame.transform.scale(background, (800, 600))
 #TITLE AND ICON
 #isso muda o título que aparece no pygame
 pygame.display.set_caption("Space Invaders")
@@ -43,6 +46,8 @@ running = True
 while running:
     # isso escolhe a cor do background do pygame
     screen.fill((0, 0, 0))
+    #background image
+    screen.blit(background, (0,0))
     #esse for quer dizer para todos os eventos dentro da tela do pygamer
     for event in pygame.event.get():
         #se o evento clicado dentro do pygame for o x a tela vai fechar
