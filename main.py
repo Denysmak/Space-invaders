@@ -27,7 +27,8 @@ enemyImg = pygame.image.load('alien.png')
 enemyImg = pygame.transform.scale(enemyImg, (50, 50))
 enemyX = random.randint(0, 800)
 enemyY = random.randint(50, 150)
-enemyX_change = 0
+enemyX_change = 0.3
+enemyY_change = 40
 
 
 def player(x, y):
@@ -62,12 +63,23 @@ while running:
             if(event.key == pygame.K_a or event.key == pygame.K_d):
                playerX_change = 0
 
-
+    #Checking for boundaries of spaceship so it doesn't go out of bounds
     playerX += playerX_change
     if playerX <= 0:
         playerX = 0
     elif playerX >= 730:
         playerX = 730
+    #Enemy movement
+    enemyX += enemyX_change
+
+
+    if enemyX <= 0:
+        enemyX_change = 0.3
+        enemyY += enemyY_change
+    elif enemyX >= 760:
+        enemyX_change = -0.3
+        enemyY += enemyY_change
+
     player(playerX, playerY)
     enemy(enemyX, enemyY)
     pygame.display.update()
