@@ -30,15 +30,31 @@ enemyImg = pygame.image.load('alien.png')
 enemyImg = pygame.transform.scale(enemyImg, (50, 50))
 enemyX = random.randint(0, 800)
 enemyY = random.randint(50, 150)
-enemyX_change = 0.3
+enemyX_change = 0.2
 enemyY_change = 40
 
+
+# Ready - you can't see the bullet on the screen
+# Fire - the bullet is currently moving
+
+bullet = pygame.image.load('bullet.png')
+bullet = pygame.transform.scale(bullet, (30, 30))
+bulletX = 0
+bulletY = 480
+bulletX_change = 0.2
+bulletY_change = 0.1
+bullet_state = "ready"
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
 
 def enemy(x, y):
     screen.blit(enemyImg, (x, y))
+
+def fire(x, y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bullet, (x + 16, y + 10))
 
 #GAME LOOP
 running = True
@@ -60,8 +76,11 @@ while running:
             if(event.key == pygame.K_a):
                 playerX_change = -0.3
 
-            elif (event.key == pygame.K_d):
+            if (event.key == pygame.K_d):
                 playerX_change = 0.3
+            if (event.key == pygame.K_SPACE):
+                fire(playerX, bulletY)
+                print("the space key has been pressed")
 
 
         elif event.type == pygame.KEYUP:
@@ -79,12 +98,16 @@ while running:
 
 
     if enemyX <= 0:
-        enemyX_change = 0.3
+        enemyX_change = 0.2
         enemyY += enemyY_change
     elif enemyX >= 760:
-        enemyX_change = -0.3
+        enemyX_change = -0.2
         enemyY += enemyY_change
 
+    #Bullet Movement
+    if bullet_state == "fire":
+        fire(playerX, bulletY)
+        bulletY -= bulletY_change
     player(playerX, playerY)
     enemy(enemyX, enemyY)
     pygame.display.update()
