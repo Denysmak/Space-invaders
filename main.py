@@ -42,7 +42,7 @@ bullet = pygame.transform.scale(bullet, (30, 30))
 bulletX = 0
 bulletY = 480
 bulletX_change = 0.2
-bulletY_change = 0.1
+bulletY_change = 0.6
 bullet_state = "ready"
 
 def player(x, y):
@@ -79,8 +79,10 @@ while running:
             if (event.key == pygame.K_d):
                 playerX_change = 0.3
             if (event.key == pygame.K_SPACE):
-                fire(playerX, bulletY)
-                print("the space key has been pressed")
+                if bullet_state == "ready":
+                    bulletX = playerX
+                    fire(playerX, bulletY)
+                    print("the space key has been pressed")
 
 
         elif event.type == pygame.KEYUP:
@@ -105,8 +107,11 @@ while running:
         enemyY += enemyY_change
 
     #Bullet Movement
+    if bulletY < 0:
+        bulletY = 480
+        bullet_state = "ready"
     if bullet_state == "fire":
-        fire(playerX, bulletY)
+        fire(bulletX, bulletY)
         bulletY -= bulletY_change
     player(playerX, playerY)
     enemy(enemyX, enemyY)
