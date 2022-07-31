@@ -1,5 +1,6 @@
-import pygame
 import random
+import math
+import pygame
 
 # INITIALIZE THE PYGAME
 pygame.init()
@@ -28,7 +29,7 @@ playerX_change = 0
 #ENEMY
 enemyImg = pygame.image.load('alien.png')
 enemyImg = pygame.transform.scale(enemyImg, (50, 50))
-enemyX = random.randint(0, 800)
+enemyX = random.randint(0, 759)
 enemyY = random.randint(50, 150)
 enemyX_change = 0.2
 enemyY_change = 40
@@ -45,6 +46,8 @@ bulletX_change = 0.2
 bulletY_change = 0.6
 bullet_state = "ready"
 
+score = 0
+
 def player(x, y):
     screen.blit(playerImg, (x, y))
 
@@ -55,6 +58,15 @@ def fire(x, y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bullet, (x + 16, y + 10))
+
+
+def isCollision(enemyX,enemyY,bulletX,bulletY):
+    distance = math.sqrt((math.pow(enemyX-bulletX, 2)) + (math.pow(enemyY-bulletY, 2)))
+    if distance < 27:
+        return True
+    else:
+        return False
+
 
 #GAME LOOP
 running = True
@@ -80,8 +92,9 @@ while running:
                 playerX_change = 0.3
             if (event.key == pygame.K_SPACE):
                 if bullet_state == "ready":
+                    #get the current X cordenate of the spaceship
                     bulletX = playerX
-                    fire(playerX, bulletY)
+                    fire(bulletX, bulletY)
                     print("the space key has been pressed")
 
 
@@ -113,6 +126,16 @@ while running:
     if bullet_state == "fire":
         fire(bulletX, bulletY)
         bulletY -= bulletY_change
+    #collision
+    collision = isCollision(enemyX,enemyY,bulletX,bulletY)
+    if collision:
+        bulletY = 480
+        bullet_state = "ready"
+        score += 1
+        print(score)
+        enemyX = random.randint(0, 759)
+        enemyY = random.randint(50, 150)
+
     player(playerX, playerY)
     enemy(enemyX, enemyY)
     pygame.display.update()
